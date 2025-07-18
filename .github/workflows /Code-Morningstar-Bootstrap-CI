@@ -1,14 +1,14 @@
-name: Code-Morningstar Bootstrap CI
+name: Code-Morningstar-Bootstrap-CI
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - '.github/workflows/bootstrap.yml'
+      - '.github/workflows/Code-Morningstar-Bootstrap-CI.yml'
       - 'Code-Morningstar.ps1'
 
 jobs:
-  bootstrap:
+  bootstrap-ci:
     runs-on: windows-latest
 
     steps:
