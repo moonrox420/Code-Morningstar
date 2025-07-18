@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+pydantic
+sqlalchemy
+psycopg2-binary
+mysql-connector-python
+pymongo
+redis
+cassandra-driver
+neo4j
+elasticsearch
+llama-cpp-python
+pyyaml
+pytest
