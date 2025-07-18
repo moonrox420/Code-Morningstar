@@ -17,4 +17,6 @@ jobs:
 
     - name: Run PowerShell Bootstrap Script
       shell: pwsh
+      working-directory: ${{ github.workspace }}
       run: ./Code-Morningstar.ps1
+
