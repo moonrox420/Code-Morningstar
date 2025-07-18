@@ -6,10 +6,10 @@ Enterprise-grade, multi-DB, privacy-first Python/FastAPI + Svelte stack with loc
 
 Run the setup script to populate all project files:
 
-```powershell
+`powershell
 # PowerShell (Windows, macOS, Linux)
 ./setup.ps1
-```
+`
 
 This will create the complete project structure with all necessary files.
 
@@ -24,7 +24,7 @@ This will create the complete project structure with all necessary files.
 
 ## Quickstart
 
-```sh
+`sh
 # 1. Run setup script first
 ./setup.ps1
 
@@ -39,17 +39,17 @@ uvicorn app.main:app --reload
 cd frontend
 npm install
 npm run dev
-```
+`
 
 ## LLM Model
 Download your GGUF model (e.g., CodeLlama) and set `LLM_MODEL_PATH` in `.env`.
 
 ## Tests
 
-```sh
+`sh
 cd backend
 pytest
-```
+`
 
 ## Project Structure
 
