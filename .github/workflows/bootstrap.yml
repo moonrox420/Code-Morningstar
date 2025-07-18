@@ -1,0 +1,20 @@
+name: Code-Morningstar Bootstrap CI
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/bootstrap.yml'
+      - 'Code-Morningstar.ps1'
+
+jobs:
+  bootstrap:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Run PowerShell Bootstrap Script
+      shell: pwsh
+      run: ./Code-Morningstar.ps1
