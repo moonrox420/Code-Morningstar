@@ -1,4 +1,4 @@
-# Code-Morningstar
+# Code Morningstar
 Elite Top Tier Coder
 <#
 .SYNOPSIS
@@ -419,7 +419,7 @@ CMD [\"uvicorn\", \"app.main:app\", \"--host\", \"0.0.0.0\", \"--port\", \"8000\
     # === Frontend ===
     "frontend/package.json" = @"
 {
-  \"name\": \"code-morningstar-ui\",
+  \"name\": \"Code Morningstar-ui\",
   \"version\": \"1.0.0\",
   \"scripts\": {
     \"dev\": \"vite dev\",
@@ -518,7 +518,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: code-morningstar-backend:latest
+        image: Code Morningstar-backend:latest
         ports:
         - containerPort: 8000
         envFrom:
@@ -556,7 +556,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: code-morningstar-frontend:latest
+        image: Code Morningstar-frontend:latest
         ports:
         - containerPort: 5173
 "@
@@ -589,9 +589,9 @@ provider \"kubernetes\" {
   config_path = \"~/.kube/config\"
 }
 
-resource \"kubernetes_namespace\" \"code_morningstar\" {
+resource \"kubernetes_namespace\" \"Code Morningstar\" {
   metadata {
-    name = \"code-morningstar\"
+    name = \"Code Morningstar\"
   }
 }
 "@
@@ -734,16 +734,16 @@ POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
-POSTGRES_DB=code_morningstar
+POSTGRES_DB=Code Morningstar
 MYSQL_HOST=localhost
 MYSQL_PORT=3306
 MYSQL_USER=root
 MYSQL_PASSWORD=root
-MYSQL_DB=code_morningstar
+MYSQL_DB=Code Morningstar
 MONGODB_URI=mongodb://localhost:27017
 REDIS_HOST=localhost
 REDIS_PORT=6379
-SQLITE_PATH=/absolute/path/to/code_morningstar.sqlite3
+SQLITE_PATH=/absolute/path/to/Code Morningstar.sqlite3
 CASSANDRA_HOST=localhost
 CASSANDRA_PORT=9042
 NEO4J_URI=bolt://localhost:7687
