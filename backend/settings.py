@@ -1,5 +1,6 @@
 from typing import List, Optional
-from pydantic import BaseSettings, Field, SecretStr, AnyUrl, PostgresDsn, MySQLDsn
+from pydantic_settings import BaseSettings
+from pydantic import Field, SecretStr, AnyUrl
 from pathlib import Path
 
 class Settings(BaseSettings):
@@ -13,14 +14,12 @@ class Settings(BaseSettings):
     POSTGRES_USER: str = Field(default="postgres")
     POSTGRES_PASSWORD: SecretStr = Field(default="postgres")
     POSTGRES_DB: str = Field(default="code_morningstar")
-    POSTGRES_DSN: Optional[PostgresDsn] = None
 
     MYSQL_HOST: str = Field(default="localhost")
     MYSQL_PORT: int = Field(default=3306)
     MYSQL_USER: str = Field(default="root")
     MYSQL_PASSWORD: SecretStr = Field(default="root")
     MYSQL_DB: str = Field(default="code_morningstar")
-    MYSQL_DSN: Optional[MySQLDsn] = None
 
     MONGODB_URI: AnyUrl = Field(default="mongodb://localhost:27017")
     REDIS_HOST: str = Field(default="localhost")

@@ -13,11 +13,4 @@ dependencies:
   - pytest
   - requests
   - pip:
-      - psycopg2-binary
-      - mysql-connector-python
-      - pymongo
-      - redis
-      - cassandra-driver
-      - neo4j
-      - elasticsearch
-      - llama-cpp-python
+      - pydantic-settings
