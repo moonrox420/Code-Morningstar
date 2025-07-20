@@ -1,0 +1,23 @@
+name: code-morningstar
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - fastapi
+  - uvicorn
+  - pydantic
+  - sqlalchemy
+  - pyyaml
+  - pytest
+  - requests
+  - pip:
+      - psycopg2-binary
+      - mysql-connector-python
+      - pymongo
+      - redis
+      - cassandra-driver
+      - neo4j
+      - elasticsearch
+      - llama-cpp-python
