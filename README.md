@@ -417,256 +417,88 @@ COPY . .
 CMD [\"uvicorn\", \"app.main:app\", \"--host\", \"0.0.0.0\", \"--port\", \"8000\"]
 "@
     # === Frontend ===
-    "frontend/CodeMorningstar.csproj" = @"
-<Project Sdk=\"Microsoft.NET.Sdk\">
-
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
-    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-    <UseWinUI>true</UseWinUI>
-    <EnableMsixTooling>true</EnableMsixTooling>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Platforms>x86;x64;ARM64</Platforms>
-    <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-    <PublishProfile>win-$(Platform).pubxml</PublishProfile>
-    <UseRidGraph>true</UseRidGraph>
-    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WindowsPackageType>None</WindowsPackageType>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <Content Include=\"Assets\\**\" />
-    <Content Include=\"*.txt\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include=\"Microsoft.WindowsAppSDK\" Version=\"1.5.240428000\" />
-    <PackageReference Include=\"Microsoft.Windows.SDK.BuildTools\" Version=\"10.0.26100.1\" />
-    <PackageReference Include=\"System.Text.Json\" Version=\"8.0.3\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectCapability Include=\"Msix\" />
-  </ItemGroup>
-
-</Project>
-"@
-    "frontend/app.manifest" = @"
-<?xml version=\"1.0\" encoding=\"utf-8\"?>
-<assembly manifestVersion=\"1.0\" xmlns=\"urn:schemas-microsoft-com:asm.v1\">
-  <assemblyIdentity version=\"1.0.0.0\" name=\"CodeMorningstar.app\"/>
-
-  <compatibility xmlns=\"urn:schemas-microsoft-com:compatibility.v1\">
-    <application>
-      <!-- Windows 10 and Windows 11 -->
-      <supportedOS Id=\"{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}\" />
-    </application>
-  </compatibility>
-
-  <application xmlns=\"urn:schemas-microsoft-com:asm.v3\">
-    <windowsSettings>
-      <dpiAware xmlns=\"http://schemas.microsoft.com/SMI/2005/WindowsSettings\">true</dpiAware>
-      <dpiAwareness xmlns=\"http://schemas.microsoft.com/SMI/2016/WindowsSettings\">PerMonitorV2</dpiAwareness>
-    </windowsSettings>
-  </application>
-</assembly>
-"@
-    "frontend/Program.cs" = @"
-using Microsoft.UI.Xaml;
-
-namespace CodeMorningstar;
-
-public partial class Program
+    "frontend/package.json" = @"
 {
-    [System.STAThread]
-    static void Main(string[] args)
-    {
-        Microsoft.UI.Xaml.Application.Start((p) =>
-        {
-            var context = new Microsoft.UI.Dispatching.DispatcherQueueSynchronizationContext(
-                Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread());
-            System.Threading.SynchronizationContext.SetSynchronizationContext(context);
-            new App();
-        });
-    }
+  \"name\": \"Code Morningstar-ui\",
+  \"version\": \"1.0.0\",
+  \"scripts\": {
+    \"dev\": \"vite dev\",
+    \"build\": \"vite build\",
+    \"preview\": \"vite preview\"
+  },
+  \"devDependencies\": {
+    \"@sveltejs/vite-plugin-svelte\": \"^2.0.0\",
+    \"svelte\": \"^4.0.0\",
+    \"typescript\": \"^5.0.0\",
+    \"vite\": \"^4.0.0\"
+  }
 }
 "@
-    "frontend/App.xaml" = @"
-<Application x:Class=\"CodeMorningstar.App\"
-             xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"
-             xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\">
-    <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <XamlControlsResources xmlns=\"using:Microsoft.UI.Xaml.Controls\" />
-                <!-- Other merged dictionaries here -->
-            </ResourceDictionary.MergedDictionaries>
-            <!-- Other app resources here -->
-        </ResourceDictionary>
-    </Application.Resources>
-</Application>
-"@
-    "frontend/App.xaml.cs" = @"
-using Microsoft.UI.Xaml;
-
-namespace CodeMorningstar;
-
-public partial class App : Application
+    "frontend/tsconfig.json" = @"
 {
-    public App()
-    {
-        this.InitializeComponent();
-    }
-
-    protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
-    {
-        m_window = new MainWindow();
-        m_window.Activate();
-    }
-
-    private Window m_window;
+  \"extends\": \"@tsconfig/svelte/tsconfig.json\",
+  \"compilerOptions\": {
+    \"strict\": true,
+    \"module\": \"ESNext\",
+    \"moduleResolution\": \"Node\",
+    \"target\": \"ES2022\",
+    \"esModuleInterop\": true,
+    \"skipLibCheck\": true
+  },
+  \"include\": [\"src/**/*\", \"src/node_modules/**/*\"],
+  \"exclude\": [\"node_modules/*\", \"public/*\"]
 }
 "@
-    "frontend/MainWindow.xaml" = @"
-<Window x:Class=\"CodeMorningstar.MainWindow\"
-        xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"
-        xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\">
+    "frontend/svelte.config.js" = @"
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height=\"Auto\"/>
-            <RowDefinition Height=\"*\"/>
-            <RowDefinition Height=\"Auto\"/>
-            <RowDefinition Height=\"*\"/>
-        </Grid.RowDefinitions>
-        
-        <TextBlock Grid.Row=\"0\" 
-                   Text=\"Code Morningstar LLM UI\" 
-                   FontSize=\"24\" 
-                   FontWeight=\"Bold\" 
-                   Margin=\"20\"
-                   HorizontalAlignment=\"Center\"/>
-        
-        <TextBox Grid.Row=\"1\" 
-                 x:Name=\"PromptTextBox\"
-                 PlaceholderText=\"Enter your prompt here...\"
-                 TextWrapping=\"Wrap\"
-                 AcceptsReturn=\"True\"
-                 Margin=\"20\"
-                 MinHeight=\"100\"/>
-        
-        <Button Grid.Row=\"2\" 
-                x:Name=\"SendButton\"
-                Content=\"Send\"
-                HorizontalAlignment=\"Center\"
-                Margin=\"20\"
-                Click=\"SendButton_Click\"
-                Style=\"{StaticResource AccentButtonStyle}\"/>
-        
-        <ScrollViewer Grid.Row=\"3\" Margin=\"20\">
-            <TextBlock x:Name=\"ResponseTextBlock\"
-                       Text=\"Response will appear here...\"
-                       TextWrapping=\"Wrap\"
-                       FontFamily=\"Consolas\"
-                       Background=\"{ThemeResource LayerFillColorDefaultBrush}\"
-                       Padding=\"10\"
-                       CornerRadius=\"4\"/>
-        </ScrollViewer>
-    </Grid>
-</Window>
+export default {
+  preprocess: vitePreprocess(),
+};
 "@
-    "frontend/MainWindow.xaml.cs" = @"
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+    "frontend/src/App.svelte" = @"
+<script lang=\"ts\">
+  let prompt = '';
+  let response = '';
+  async function sendPrompt() {
+    const res = await fetch('http://localhost:8000/llm/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
+    const data = await res.json();
+    response = data.result || data.detail || \"Error\";
+  }
+</script>
 
-namespace CodeMorningstar;
+<main>
+  <h1>Code Morningstar LLM UI</h1>
+  <textarea bind:value={prompt} rows=\"4\" cols=\"50\" placeholder=\"Enter prompt\"></textarea>
+  <br />
+  <button on:click={sendPrompt}>Send</button>
+  <h2>Response:</h2>
+  <pre>{response}</pre>
+</main>
 
-public sealed partial class MainWindow : Window
-{
-    private readonly HttpClient _httpClient;
-    
-    public MainWindow()
-    {
-        this.InitializeComponent();
-        _httpClient = new HttpClient();
-        this.Title = \"Code Morningstar\";
-    }
-
-    private async void SendButton_Click(object sender, RoutedEventArgs e)
-    {
-        var prompt = PromptTextBox.Text?.Trim();
-        if (string.IsNullOrEmpty(prompt))
-        {
-            ResponseTextBlock.Text = \"Please enter a prompt.\";
-            return;
-        }
-
-        SendButton.IsEnabled = false;
-        ResponseTextBlock.Text = \"Generating response...\";
-
-        try
-        {
-            var response = await SendPromptAsync(prompt);
-            ResponseTextBlock.Text = response;
-        }
-        catch (Exception ex)
-        {
-            ResponseTextBlock.Text = $\"Error: {ex.Message}\";
-        }
-        finally
-        {
-            SendButton.IsEnabled = true;
-        }
-    }
-
-    private async Task<string> SendPromptAsync(string prompt)
-    {
-        var requestData = new { prompt = prompt };
-        var json = JsonSerializer.Serialize(requestData);
-        var content = new StringContent(json, Encoding.UTF8, \"application/json\");
-
-        var response = await _httpClient.PostAsync(\"http://localhost:8000/llm/generate\", content);
-        var responseText = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            var responseData = JsonSerializer.Deserialize<JsonElement>(responseText);
-            return responseData.TryGetProperty(\"result\", out var result) 
-                ? result.GetString() ?? \"No response\"
-                : \"No result in response\";
-        }
-        else
-        {
-            var errorData = JsonSerializer.Deserialize<JsonElement>(responseText);
-            return errorData.TryGetProperty(\"detail\", out var detail)
-                ? $\"API Error: {detail.GetString()}\"
-                : $\"HTTP Error {response.StatusCode}: {responseText}\";
-        }
-    }
-}
+<style>
+  main { padding: 2rem; }
+  textarea { width: 100%; }
+  button { margin-top: 1rem; }
+</style>
 "@
     "frontend/Dockerfile" = @"
-FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS build
+FROM node:20-alpine
 
 WORKDIR /app
 
-COPY *.csproj ./
-RUN dotnet restore
+COPY package.json tsconfig.json svelte.config.js ./
+COPY src ./src
+COPY public ./public
 
-COPY . ./
-RUN dotnet publish -c Release -o out -r win-x64 --self-contained false
+RUN npm install
+RUN npm run build
 
-FROM mcr.microsoft.com/dotnet/runtime:8.0-windowsservercore-ltsc2022
-WORKDIR /app
-COPY --from=build /app/out .
-
-ENTRYPOINT [\"CodeMorningstar.exe\"]
+CMD [\"npm\", \"run\", \"preview\", \"--\", \"--host\", \"0.0.0.0\", \"--port\", \"5173\"]
 "@
     # === Infra & CI/CD ===
     "infra/k8s/backend-deployment.yaml" = @"
@@ -805,24 +637,23 @@ on:
 
 jobs:
   test:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: frontend
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-node@v4
         with:
-          dotnet-version: '8.0.x'
-      - run: dotnet restore
-      - run: dotnet build --configuration Release --no-restore
-      - run: dotnet publish --configuration Release --no-build --output ./publish
+          node-version: '20'
+      - run: npm ci
+      - run: npm run build
 "@
     # === Docs & ADRs ===
     "README.md" = @"
 # Code Morningstar
 
-Enterprise-grade, multi-DB, privacy-first Python/FastAPI + WinUI stack with local LLM integration.
+Enterprise-grade, multi-DB, privacy-first Python/FastAPI + Svelte stack with local LLM integration.
 
 ## Features
 
@@ -830,7 +661,6 @@ Enterprise-grade, multi-DB, privacy-first Python/FastAPI + WinUI stack with loca
 - Multi-database support: Postgres, MySQL, MongoDB, Redis, SQLite, Cassandra, Neo4j, Elasticsearch
 - Local GGUF LLM inference (via [llama-cpp-python](https://github.com/abetlen/llama-cpp-python))
 - Feature flag management
-- Modern WinUI 3 desktop frontend for Windows
 - Production-ready CI/CD (GitHub Actions), K8s, Terraform
 - Secure, dependency-injected, and testable architecture
 
@@ -843,11 +673,10 @@ pip install -r requirements.txt
 cp ../.env.example .env
 uvicorn app.main:app --reload
 
-# Frontend (WinUI)
+# Frontend
 cd frontend
-dotnet restore
-dotnet build
-dotnet run
+npm install
+npm run dev
 \`\`\`
 
 ## LLM Model
@@ -859,12 +688,6 @@ Download your GGUF model (e.g., CodeLlama) and set \`LLM_MODEL_PATH\` in \`.env\
 cd backend
 pytest
 \`\`\`
-
-## Frontend Development
-The WinUI frontend requires:
-- Windows 10 version 1809 or later
-- .NET 8.0 SDK
-- Visual Studio 2022 (recommended) or VS Code with C# extensions
 "@
     "ADRs/0001-architecture.md" = @"
 # ADR 0001: Enterprise Architecture for Code Morningstar
@@ -874,20 +697,17 @@ The WinUI frontend requires:
 - Must support multiple databases for migration and data sovereignty.
 - LLMs must run locally for privacy and security.
 - Strict config, feature flags, and ironclad error handling are non-negotiable.
-- Need a modern, native Windows desktop experience for the frontend.
 
 ## Decision
 
 - Backend: Python, FastAPI, Pydantic, SQLAlchemy, dependency injection.
-- Frontend: WinUI 3 with C# for native Windows desktop experience.
+- Frontend: Svelte with strict TypeScript.
 - Infrastructure: Docker, K8s manifests, Terraform for provisioning, GitHub Actions CI.
 
 ## Consequences
 
 - Upfront complexity for maintainability and security.
 - All code validated, strictly typed, and covered by tests/CI.
-- Frontend limited to Windows platform but provides native performance and integration.
-- Better integration with Windows features and modern UI controls.
 "@
     ".gitignore" = @"
 __pycache__/
