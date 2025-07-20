@@ -953,7 +953,7 @@ $files.GetEnumerator() | ForEach-Object {
         Write-Host "Writing file: $fpath"
         Set-Content -Path $fpath -Value $content -Encoding UTF8 -Force
     } catch {
-        Write-Error "Failed to write $fpath`: $($_.Exception.Message)"
+        Write-Error "Failed to write $fpath: $_"
         exit 1
     }
 }
