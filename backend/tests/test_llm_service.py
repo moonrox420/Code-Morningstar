@@ -14,6 +14,10 @@ def mock_model_file():
         yield f.name
     Path(f.name).unlink()
 
+def test_llm_service_basic():
+    service = LLMService()
+    assert service is not None
+
 def test_llm_service_initialization(mock_model_file):
     service = LLMService(mock_model_file)
     assert service.model_path == Path(mock_model_file)
