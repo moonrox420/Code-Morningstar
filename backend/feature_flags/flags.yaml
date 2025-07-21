@@ -1,3 +1,29 @@
+# Feature Flags for Code Morningstar
+# Toggle features on/off for different environments
+
+# LLM Features
 enable_llm: true
-enable_audit_logs: false
+llm_mock_mode: false  # Set to true if no GGUF model available
+llm_streaming: false  # Future feature for streaming responses
+
+# API Features
+api_cors_enabled: true
+api_rate_limiting: false
+api_authentication: false  # For local development
+
+# Database Features
+database_migration_auto: true
+database_connection_pooling: true
+
+# UI Features
 enable_beta_ui: false
+enable_audit_logs: false
+
+# Debugging and Development
+debug_mode: true
+verbose_logging: true
+performance_monitoring: false
+
+# Frontend Integration
+frontend_hot_reload: true
+frontend_error_overlay: true

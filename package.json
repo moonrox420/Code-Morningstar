@@ -1,0 +1,37 @@
+{
+  "name": "code-morningstar",
+  "version": "1.0.0",
+  "description": "Enterprise-grade, multi-DB, privacy-first Python/FastAPI + Svelte stack with local LLM integration",
+  "private": true,
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && C:/Users/dusti/Code-Morningstar/.venv/Scripts/python.exe start.py",
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && pip install -r requirements.txt",
+    "build:frontend": "cd frontend && npm run build",
+    "test:backend": "cd backend && pytest",
+    "setup": "npm run install:frontend && npm run install:backend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "fastapi",
+    "svelte",
+    "llm",
+    "gguf",
+    "local-ai",
+    "python",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "C:\\Users\\dusti\\Code-Morningstar"
+  }
+}

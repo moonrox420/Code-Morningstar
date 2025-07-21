@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+
+const { spawn } = require('child_process');
+const path = require('path');
+
+// Launch the Code Morningstar application
+console.log('🌟 Starting Code Morningstar...');
+
+// Start backend
+const backend = spawn('python', ['backend/main.py'], {
+  cwd: __dirname,
+  stdio: 'inherit'
+});
+
+// Start frontend
+const frontend = spawn('npm', ['run', 'dev'], {
+  cwd: path.join(__dirname, 'frontend'),
+  stdio: 'inherit'
+});
+
+console.log('✅ Code Morningstar is running!');
+console.log('🔗 Frontend: http://localhost:5173');
+console.log('🔗 Backend: http://localhost:8000');

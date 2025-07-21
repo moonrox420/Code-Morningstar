@@ -1,0 +1,127 @@
+2025-07-20 19:34:35 - Starting Code Morningstar project restoration in C:\Users\dusti\Code-Morningstar
+2025-07-20 19:34:35 - Creating directory structure...
+2025-07-20 19:34:35 - Writing file: .github/workflows/backend.yml
+2025-07-20 19:34:35 - Writing file: backend/services/mongo_service.py
+2025-07-20 19:34:35 - Writing file: backend/services/postgres_service.py
+2025-07-20 19:34:35 - Writing file: backend/app/llm_api.py
+2025-07-20 19:34:35 - Writing file: backend/app/__init__.py
+2025-07-20 19:34:35 - Writing file: frontend/tsconfig.json
+2025-07-20 19:34:35 - Writing file: infra/k8s/backend-service.yaml
+2025-07-20 19:34:35 - Creating directory: C:\Users\dusti\Code-Morningstar\frontend\src
+2025-07-20 19:34:36 - Writing file: frontend/src/vite-env.d.ts
+2025-07-20 19:34:36 - Writing file: README.md
+2025-07-20 19:34:36 - Writing file: backend/Dockerfile
+2025-07-20 19:34:36 - Writing file: infra/k8s/frontend-deployment.yaml
+2025-07-20 19:34:36 - Writing file: backend/app/main.py
+2025-07-20 19:34:36 - Writing file: backend/services/redis_service.py
+2025-07-20 19:34:36 - Writing file: backend/services/cassandra_service.py
+2025-07-20 19:34:36 - Writing file: backend/services/neo4j_service.py
+2025-07-20 19:34:36 - Writing file: backend/requirements.txt
+2025-07-20 19:34:36 - Writing file: backend/services/elasticsearch_service.py
+2025-07-20 19:34:36 - Writing file: backend/db/model.py
+2025-07-20 19:34:36 - Writing file: infra/k8s/backend-deployment.yaml
+2025-07-20 19:34:36 - Writing file: docker-compose.yml
+2025-07-20 19:34:36 - Writing file: frontend/src/App.svelte
+2025-07-20 19:34:36 - Writing file: backend/feature_flags/__init__.py
+2025-07-20 19:34:36 - Writing file: infra/terraform/main.tf
+2025-07-20 19:34:36 - Writing file: backend/services/llm_service.py
+2025-07-20 19:34:36 - Writing file: backend/services/sqlite_service.py
+2025-07-20 19:34:36 - Writing file: frontend/Dockerfile
+2025-07-20 19:34:36 - Writing file: frontend/svelte.config.js
+2025-07-20 19:34:36 - Writing file: backend/services/mysql_service.py
+2025-07-20 19:34:36 - Writing file: backend/db/__init__.py
+2025-07-20 19:34:36 - Writing file: frontend/package.json
+2025-07-20 19:34:36 - Writing file: backend/services/__init__.py
+2025-07-20 19:34:36 - Writing file: infra/k8s/frontend-service.yaml
+2025-07-20 19:34:36 - Writing file: backend/settings.py
+2025-07-20 19:34:36 - Writing file: backend/feature_flags/flags.yaml
+2025-07-20 19:34:36 - Writing file: backend/feature_flags/manager.py
+2025-07-20 19:34:36 - Creating directory: C:\Users\dusti\Code-Morningstar\frontend\public
+2025-07-20 19:34:36 - Writing file: frontend/public/vite.svg
+2025-07-20 19:34:36 - Writing file: backend/app/api_router.py
+2025-07-20 19:34:36 - Writing file: .github/workflows/frontend.yml
+2025-07-20 19:34:36 - Writing file: frontend/index.html
+2025-07-20 19:34:36 - Writing file: frontend/src/main.ts
+2025-07-20 19:34:36 - Writing file: backend/services/db_router.py
+2025-07-20 19:34:36 - Writing file: frontend/vite.config.js
+2025-07-20 19:34:36 - Writing file: backend/.env.example
+2025-07-20 19:34:36 - Writing file: backend/tests/test_db_services.py
+2025-07-20 19:34:36 - Creating additional directory: backend/logs
+2025-07-20 19:34:36 - Creating additional directory: backend/models
+2025-07-20 19:34:36 - Creating additional directory: frontend/dist
+2025-07-20 19:34:36 - Creating additional directory: frontend/node_modules
+2025-07-20 19:34:36 - Creating additional directory: docs
+2025-07-20 19:34:36 - Project restoration completed successfully!
+2025-07-20 19:34:36 - 
+2025-07-20 19:34:36 - === NEXT STEPS ===
+2025-07-20 19:34:36 - 1. Copy backend/.env.example to backend/.env and configure it
+2025-07-20 19:34:36 - 2. Install Python dependencies: cd backend && pip install -r requirements.txt
+2025-07-20 19:34:36 - 3. Install Node.js dependencies: cd frontend && npm install
+2025-07-20 19:34:36 - 4. Download a GGUF model and set LLM_MODEL_PATH in .env
+2025-07-20 19:34:36 - 5. Start backend: cd backend && uvicorn app.main:app --reload
+2025-07-20 19:34:36 - 6. Start frontend: cd frontend && npm run dev
+2025-07-20 19:34:36 - 7. Access the application at http://localhost:5173
+2025-07-20 19:34:36 - 
+2025-07-20 19:34:36 - For Docker deployment, run: docker-compose up --build
+2025-07-20 19:34:36 - 
+2025-07-20 19:34:36 - Check the README.md for detailed instructions and troubleshooting.
+2025-07-20 19:34:39 - Starting Code Morningstar project restoration in C:\Users\dusti\Code-Morningstar
+2025-07-20 19:34:39 - Creating directory structure...
+2025-07-20 19:34:39 - Writing file: .github/workflows/backend.yml
+2025-07-20 19:34:39 - Writing file: backend/services/mongo_service.py
+2025-07-20 19:34:39 - Writing file: backend/services/postgres_service.py
+2025-07-20 19:34:39 - Writing file: backend/app/llm_api.py
+2025-07-20 19:34:39 - Writing file: backend/app/__init__.py
+2025-07-20 19:34:39 - Writing file: frontend/tsconfig.json
+2025-07-20 19:34:39 - Writing file: infra/k8s/backend-service.yaml
+2025-07-20 19:34:39 - Writing file: frontend/src/vite-env.d.ts
+2025-07-20 19:34:39 - Writing file: README.md
+2025-07-20 19:34:39 - Writing file: backend/Dockerfile
+2025-07-20 19:34:39 - Writing file: infra/k8s/frontend-deployment.yaml
+2025-07-20 19:34:39 - Writing file: backend/app/main.py
+2025-07-20 19:34:39 - Writing file: backend/services/redis_service.py
+2025-07-20 19:34:39 - Writing file: backend/services/cassandra_service.py
+2025-07-20 19:34:39 - Writing file: backend/services/neo4j_service.py
+2025-07-20 19:34:39 - Writing file: backend/requirements.txt
+2025-07-20 19:34:39 - Writing file: backend/services/elasticsearch_service.py
+2025-07-20 19:34:39 - Writing file: backend/db/model.py
+2025-07-20 19:34:39 - Writing file: infra/k8s/backend-deployment.yaml
+2025-07-20 19:34:39 - Writing file: docker-compose.yml
+2025-07-20 19:34:39 - Writing file: frontend/src/App.svelte
+2025-07-20 19:34:39 - Writing file: backend/feature_flags/__init__.py
+2025-07-20 19:34:40 - Writing file: infra/terraform/main.tf
+2025-07-20 19:34:40 - Writing file: backend/services/llm_service.py
+2025-07-20 19:34:40 - Writing file: backend/services/sqlite_service.py
+2025-07-20 19:34:40 - Writing file: frontend/Dockerfile
+2025-07-20 19:34:40 - Writing file: frontend/svelte.config.js
+2025-07-20 19:34:40 - Writing file: backend/services/mysql_service.py
+2025-07-20 19:34:40 - Writing file: backend/db/__init__.py
+2025-07-20 19:34:40 - Writing file: frontend/package.json
+2025-07-20 19:34:40 - Writing file: backend/services/__init__.py
+2025-07-20 19:34:40 - Writing file: infra/k8s/frontend-service.yaml
+2025-07-20 19:34:40 - Writing file: backend/settings.py
+2025-07-20 19:34:40 - Writing file: backend/feature_flags/flags.yaml
+2025-07-20 19:34:40 - Writing file: backend/feature_flags/manager.py
+2025-07-20 19:34:40 - Writing file: frontend/public/vite.svg
+2025-07-20 19:34:40 - Writing file: backend/app/api_router.py
+2025-07-20 19:34:40 - Writing file: .github/workflows/frontend.yml
+2025-07-20 19:34:40 - Writing file: frontend/index.html
+2025-07-20 19:34:40 - Writing file: frontend/src/main.ts
+2025-07-20 19:34:40 - Writing file: backend/services/db_router.py
+2025-07-20 19:34:40 - Writing file: frontend/vite.config.js
+2025-07-20 19:34:40 - Writing file: backend/.env.example
+2025-07-20 19:34:40 - Writing file: backend/tests/test_db_services.py
+2025-07-20 19:34:40 - Project restoration completed successfully!
+2025-07-20 19:34:40 - 
+2025-07-20 19:34:40 - === NEXT STEPS ===
+2025-07-20 19:34:40 - 1. Copy backend/.env.example to backend/.env and configure it
+2025-07-20 19:34:40 - 2. Install Python dependencies: cd backend && pip install -r requirements.txt
+2025-07-20 19:34:40 - 3. Install Node.js dependencies: cd frontend && npm install
+2025-07-20 19:34:40 - 4. Download a GGUF model and set LLM_MODEL_PATH in .env
+2025-07-20 19:34:40 - 5. Start backend: cd backend && uvicorn app.main:app --reload
+2025-07-20 19:34:40 - 6. Start frontend: cd frontend && npm run dev
+2025-07-20 19:34:40 - 7. Access the application at http://localhost:5173
+2025-07-20 19:34:40 - 
+2025-07-20 19:34:40 - For Docker deployment, run: docker-compose up --build
+2025-07-20 19:34:40 - 
+2025-07-20 19:34:40 - Check the README.md for detailed instructions and troubleshooting.
