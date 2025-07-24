@@ -18,5 +18,11 @@ jobs:
     - name: Run PowerShell Bootstrap Script
       shell: pwsh
       working-directory: ${{ github.workspace }}
-      run: ./Code-Morningstar.ps1
+      run: |
+        try {
+          Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
+        } catch {
+          Write-Warning "Could not set execution policy: $($_.Exception.Message)"
+        }
+        ./Code-Morningstar.ps1
 
