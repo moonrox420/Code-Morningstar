@@ -13,6 +13,7 @@ class PostgresService:
                 cur.execute(query, params)
                 if cur.description:
                     return cur.fetchall()
-                conn.commit()
+                if query.strip().upper().startswith(("INSERT", "UPDATE", "DELETE", "CREATE", "DROP", "ALTER")):
+                    conn.commit()
         finally:
             self.pool.putconn(conn)
