@@ -12,7 +12,7 @@ class LLMRequest(BaseModel):
     temperature: Optional[float] = Field(default=0.7, ge=0.0, le=2.0, description="Sampling temperature")
 
 class LLMResponse(BaseModel):
-    result: str
+    response: str
     model_loaded: bool
     tokens_generated: Optional[int] = None
 
@@ -29,7 +29,7 @@ async def generate_text(request: LLMRequest, llm: LLMService = Depends(get_llm_s
             temperature=request.temperature or 0.7
         )
         return LLMResponse(
-            result=result,
+            response=result,
             model_loaded=llm.is_model_loaded(),
             tokens_generated=len(result.split()) if result else 0
         )
