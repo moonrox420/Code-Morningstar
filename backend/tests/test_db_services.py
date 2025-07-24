@@ -1,4 +1,11 @@
 import pytest
+import sys
+import os
+from pathlib import Path
+
+# Add the project root to Python path  
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 from backend.services.sqlite_service import SQLiteService
 
 @pytest.fixture

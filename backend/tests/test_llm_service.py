@@ -1,11 +1,13 @@
 import pytest
 import sys
 import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from pathlib import Path
+
+# Add the project root to Python path  
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from backend.services.llm_service import LLMService
 import tempfile
-from pathlib import Path
 
 @pytest.fixture
 def mock_model_file():
