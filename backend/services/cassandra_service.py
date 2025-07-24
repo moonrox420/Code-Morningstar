@@ -3,7 +3,7 @@ from typing import Any
 
 class CassandraService:
     def __init__(self, host: str, port: int):
-        self.cluster = Cluster([host], port=port)
+        self.cluster = Cluster([f"{host}:{port}"])
         self.session = self.cluster.connect()
 
     def execute(self, cql: str, params: tuple = ()) -> Any:
