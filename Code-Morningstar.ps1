@@ -7,6 +7,11 @@
     - Fails on any error and provides diagnostics.
 .NOTES
     Requires PowerShell 5+.
+    If you encounter execution policy errors, run with:
+    pwsh -ExecutionPolicy Bypass -File ./Code-Morningstar.ps1
+    
+    Or use the wrapper script:
+    pwsh ./run-bootstrap.ps1
 #>
 
 $ErrorActionPreference = "Stop"
@@ -771,7 +776,7 @@ $files.GetEnumerator() | ForEach-Object {
         Write-Host "Writing file: $fpath"
         Set-Content -Path $fpath -Value $content -Encoding UTF8 -Force
     } catch {
-        Write-Error "Failed to write $fpath: $_"
+        Write-Error "Failed to write ${fpath}: $($_.Exception.Message)"
         exit 1
     }
 }
