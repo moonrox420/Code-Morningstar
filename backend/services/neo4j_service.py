@@ -7,4 +7,5 @@ class Neo4jService:
 
     def execute(self, cypher: str, params: dict = None) -> Any:
         with self.driver.session() as session:
-            return session.run(cypher, params or {})
+            result = session.run(cypher, params or {})
+            return [record.data() for record in result]
