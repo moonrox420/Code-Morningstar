@@ -53,4 +53,4 @@ class PostRead(PostBase):
     created_at: datetime
     author_id: int
     class Config:
-        orm_mode = True
+        from_attributes = True
