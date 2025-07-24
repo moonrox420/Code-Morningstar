@@ -12,7 +12,8 @@ class MySQLService:
             cursor = conn.cursor()
             cursor.execute(query, params)
             result = cursor.fetchall() if cursor.description else None
-            conn.commit()
+            if cursor.description is None:  # Commit only for data-modifying queries
+                conn.commit()
             return result
         finally:
             cursor.close()
