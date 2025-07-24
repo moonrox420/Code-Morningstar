@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 Code Morningstar - Local LLM Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 90%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .health-status {
+            margin: 1rem 0;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .status-healthy { background: #d4edda; color: #155724; }
+        .status-unhealthy { background: #f8d7da; color: #721c24; }
+        .status-checking { background: #d1ecf1; color: #0c5460; }
+        
+        .input-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 1rem;
+        }
+        
+        textarea:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .generate-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+        
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .param-input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 80px;
+        }
+        
+        .response-section {
+            border-top: 2px solid #eee;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .response-text {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 0.75rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌟 Code Morningstar</h1>
+            <p>Local LLM Code Assistant</p>
+            <div id="healthStatus" class="health-status status-checking">
+                Status: Checking...
+            </div>
+        </div>
+        
+        <div class="input-section">
+            <textarea 
+                id="promptInput" 
+                placeholder="Enter your code prompt here..."
+                disabled
+            ></textarea>
+            
+            <div class="controls">
+                <button id="generateBtn" class="generate-btn" disabled>
+                    Generate (Ctrl+Enter)
+                </button>
+                <label>
+                    Max Tokens: 
+                    <input type="number" id="maxTokens" class="param-input" value="100" min="1" max="2048">
+                </label>
+                <label>
+                    Temperature: 
+                    <input type="number" id="temperature" class="param-input" value="0.7" min="0" max="2" step="0.1">
+                </label>
+            </div>
+        </div>
+        
+        <div id="responseSection" class="response-section hidden">
+            <h3>Response:</h3>
+            <div id="responseText" class="response-text"></div>
+        </div>
+        
+        <div id="errorSection" class="error hidden"></div>
+    </div>
+
+    <script>
+        // DOM elements
+        const promptInput = document.getElementById('promptInput');
+        const generateBtn = document.getElementById('generateBtn');
+        const maxTokensInput = document.getElementById('maxTokens');
+        const temperatureInput = document.getElementById('temperature');
+        const healthStatus = document.getElementById('healthStatus');
+        const responseSection = document.getElementById('responseSection');
+        const responseText = document.getElementById('responseText');
+        const errorSection = document.getElementById('errorSection');
+        
+        let isLoading = false;
+        
+        // API base URL (adjust if needed)
+        const API_BASE = window.location.origin;
+        
+        // Check API health
+        async function checkHealth() {
+            try {
+                const response = await fetch(`${API_BASE}/llm/health`);
+                const data = await response.json();
+                
+                const status = data.status === 'healthy' ? 'healthy' : 
+                             data.model_loaded ? 'healthy' : 'unhealthy';
+                             
+                updateHealthStatus(status, data.model_loaded);
+                
+                // Enable controls if API is responding
+                promptInput.disabled = false;
+                generateBtn.disabled = false;
+                
+            } catch (error) {
+                updateHealthStatus('error');
+                showError('Cannot connect to API. Make sure the backend server is running on port 8000.');
+            }
+        }
+        
+        function updateHealthStatus(status, modelLoaded = false) {
+            healthStatus.className = `health-status status-${status}`;
+            
+            switch(status) {
+                case 'healthy':
+                    healthStatus.textContent = `Status: ${modelLoaded ? 'Model Loaded' : 'Mock Mode (No Model)'}`;
+                    break;
+                case 'unhealthy':
+                    healthStatus.textContent = 'Status: API Available (Mock Mode)';
+                    break;
+                case 'error':
+                    healthStatus.textContent = 'Status: API Unavailable';
+                    break;
+                default:
+                    healthStatus.textContent = 'Status: Checking...';
+            }
+        }
+        
+        // Generate text
+        async function generateText() {
+            const prompt = promptInput.value.trim();
+            if (!prompt || isLoading) return;
+            
+            setLoading(true);
+            hideError();
+            
+            try {
+                const response = await fetch(`${API_BASE}/llm/generate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        prompt: prompt,
+                        max_tokens: parseInt(maxTokensInput.value) || 100,
+                        temperature: parseFloat(temperatureInput.value) || 0.7
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                showResponse(data.response || 'No response received');
+                
+            } catch (error) {
+                showError(`Generation failed: ${error.message}`);
+            } finally {
+                setLoading(false);
+            }
+        }
+        
+        function setLoading(loading) {
+            isLoading = loading;
+            generateBtn.disabled = loading;
+            promptInput.disabled = loading;
+            generateBtn.textContent = loading ? 'Generating...' : 'Generate (Ctrl+Enter)';
+        }
+        
+        function showResponse(text) {
+            responseText.textContent = text;
+            responseSection.classList.remove('hidden');
+        }
+        
+        function showError(message) {
+            errorSection.textContent = message;
+            errorSection.classList.remove('hidden');
+        }
+        
+        function hideError() {
+            errorSection.classList.add('hidden');
+        }
+        
+        // Event listeners
+        generateBtn.addEventListener('click', generateText);
+        
+        promptInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.ctrlKey && !isLoading) {
+                e.preventDefault();
+                generateText();
+            }
+        });
+        
+        // Initialize
+        checkHealth();
+        
+        // Periodic health check
+        setInterval(checkHealth, 30000); // Check every 30 seconds
+    </script>
+</body>
+</html>
