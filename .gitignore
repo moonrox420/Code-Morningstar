@@ -9,3 +9,35 @@ __pycache__/
 node_modules/
 dist/
 frontend/build/
+
+# Frontend Svelte build outputs
+frontend/dist/
+frontend/.svelte-kit/
+
+# Test coverage
+coverage.xml
+htmlcov/
+.coverage
+.pytest_cache/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Model files
+*.gguf
+models/
+
+# Log files
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Backup files
+*.bak
+*.backup

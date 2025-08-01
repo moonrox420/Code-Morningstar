@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  test-backend:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -35,6 +35,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r backend/requirements.txt
 
+    - name: Create mock model file for testing
+      run: echo "mock model" > /tmp/model.gguf
+
     - name: Run tests
       run: |
         python -m pytest backend/tests/ -v --cov=backend --cov-report=xml
@@ -45,6 +48,30 @@ jobs:
         file: ./coverage.xml
         flags: unittests
         name: codecov-umbrella
+
+  test-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    
+    - name: Install frontend dependencies
+      working-directory: frontend
+      run: npm ci
+    
+    - name: Build frontend
+      working-directory: frontend
+      run: npm run build
+    
+    - name: Run frontend security audit
+      working-directory: frontend
+      run: npm audit --audit-level=moderate
 
   lint:
     runs-on: ubuntu-latest
@@ -92,7 +119,7 @@ jobs:
       run: bandit -r backend/
 
   build:
-    needs: [test, lint, security]
+    needs: [test-backend, test-frontend, lint, security]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
