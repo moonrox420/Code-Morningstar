@@ -28,13 +28,19 @@ class LLMService:
             print(f"Warning: Model file not found: {self.model_path}. Using mock responses.")
             return None
             
+        # Check if file is too small to be a valid GGUF model (valid models are typically several MB+)
+        if self.model_path.stat().st_size < 1024:  # Less than 1KB is definitely not a valid model
+            print(f"Warning: Model file too small to be valid: {self.model_path}. Using mock responses.")
+            return None
+            
         try:
-            return Llama(
+            llm = Llama(
                 model_path=str(self.model_path),
                 n_ctx=self.n_ctx,
                 n_threads=self.n_threads,
                 verbose=False
             )
+            return llm
         except Exception as e:
             print(f"Error loading model: {e}. Using mock responses.")
             return None
